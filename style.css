@@ -36,7 +36,7 @@ button.single_add_to_cart_button.elementor-button.button.alt {
 .wpgs-for.slick-initialized.slick-slider {
     display: none!important;
 }
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
 .slick-track {
     display: flex!important;
     flex-wrap: nowrap;
@@ -69,7 +69,7 @@ button.single_add_to_cart_button.elementor-button.button.alt {
     scroll-snap-align: start;
 }
 }
-@media (min-width: 768px) {
+@media (min-width: 1025px) {
     .slick-track {
         width: 100% !important;
         flex-wrap: wrap;
@@ -160,7 +160,9 @@ span.next {
     line-height: 0!important;
     font-size: 23px!important;
 }
-
+.woocommerce #content div.product div.images, .woocommerce div.product div.images, .woocommerce-page #content div.product div.images, .woocommerce-page div.product div.images{
+    width: 100%!important
+}
 .nias-button-addtocart .price{
 
     display: none
