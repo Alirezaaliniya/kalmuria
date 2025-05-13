@@ -1,3 +1,4 @@
+<script>
 document.addEventListener('DOMContentLoaded', function() {
   const imageOptions = document.querySelectorAll('.cfvsw-image-option');
   
@@ -15,50 +16,38 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 	
-	
-// Wait for the DOM to be fully loaded
+// منتظر می‌مونیم که DOM به‌طور کامل بارگذاری بشه
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to update the selected size text next to the Add to Cart button
-    function updateSelectedSize() {
-        // Find the size swatch container specifically by swatches-attr
-        const sizeSwatchContainer = document.querySelector('.cfvsw-swatches-container[swatches-attr="attribute_pa_size"]');
-        if (!sizeSwatchContainer) return;
-        
-        // Find the selected swatch within this container
-        const selectedSwatch = sizeSwatchContainer.querySelector('.cfvsw-selected-swatch');
-        
-        // Find the button text element
+    // تابعی برای به‌روزرسانی متن دکمه بر اساس گزینه‌های انتخاب‌شده
+    function updateSelectedOptions() {
+        // پیدا کردن تمام گزینه‌هایی که انتخاب شدن
+        const selectedSwatches = document.querySelectorAll('.cfvsw-selected-swatch');
+        // پیدا کردن المنت متن دکمه
         const buttonTextElement = document.querySelector('.single_add_to_cart_button .elementor-button-text');
         
-        if (selectedSwatch && buttonTextElement) {
-            const sizeTitle = selectedSwatch.getAttribute('data-title');
+        if (selectedSwatches.length && buttonTextElement) {
             const originalText = 'افزودن به سبد خرید';
-            buttonTextElement.textContent = originalText + ' - ' + sizeTitle;
+            // استخراج تایتل همه‌ی گزینه‌ها
+            const titles = Array.from(selectedSwatches).map(function(swatch) {
+                return swatch.getAttribute('data-title');
+            }).filter(Boolean); // فقط مواردی که مقدار دارن
+            
+            // به‌روزرسانی متن دکمه با ترکیب همه‌ی تایتل‌ها
+            buttonTextElement.textContent = originalText + ' - ' + titles.join(' / ');
         }
     }
-    
-    // Initial update
-    updateSelectedSize();
-    
-    // Add click event listeners only to size swatches
-    const sizeSwatchContainer = document.querySelector('.cfvsw-swatches-container[swatches-attr="attribute_pa_size"]');
-    if (sizeSwatchContainer) {
-        const sizeOptions = sizeSwatchContainer.querySelectorAll('.cfvsw-swatches-option');
-        sizeOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Small timeout to allow the class to be updated
-                setTimeout(updateSelectedSize, 100);
-            });
-        });
-    }
-    
-    // Also check for any custom events that might be triggered by the swatches plugin
-    document.addEventListener('cfvsw_selected_attribute', updateSelectedSize);
-    
-    // For safety, periodically check if the selection has changed
-    setInterval(updateSelectedSize, 1000);
+
+    // اجرا هنگام بارگذاری اولیه
+    updateSelectedOptions();
+
+    // اجرا هنگام کلیک روی گزینه‌های متغیر
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.cfvsw-swatches-option')) {
+            setTimeout(updateSelectedOptions, 10); // تاخیر کوتاه برای اطمینان از اعمال کلاس‌ها
+        }
+    });
 });
-	
+
 	
 	
 	
@@ -223,3 +212,6 @@ jQuery(document).ready(function($) {
     }
   });
 });
+
+
+</script>
